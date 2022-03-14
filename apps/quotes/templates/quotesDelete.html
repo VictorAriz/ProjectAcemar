@@ -1,0 +1,14 @@
+{% extends 'layouts/base.html' %}
+
+{% block contenttitle %}
+Está seguro que desea eliminar esta cotización: {{ object.first_name }}?
+{%endblock%}
+
+{% block contendbody %}
+
+<form method="post">
+    {% csrf_token %}
+    <a href="#" ><button class="button special" name="Eliminar" type="submit" >Si, Eliminar</button></a>
+    <a class="button" href="{% url 'quotes:quotesList' %}">Cancelar</a>
+</form>
+{% endblock %}

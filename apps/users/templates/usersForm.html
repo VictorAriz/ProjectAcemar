@@ -1,0 +1,91 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Crear usuario{% endblock %}
+{% block bodyClass %}user{% endblock %}
+
+{% block contendbody %}
+<style>
+  #id_singleLevels {
+    /* height: calc(3.5rem + 2px); */
+    line-height: 1.25;
+    display: block;
+    width: 100%;
+    padding: 2.25rem 0.75rem 0.625rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #fff;
+    /* color: #212529; */
+    /* background-color: #fff; */
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+
+  #id_singleLevels li {
+    display: block;
+    min-height: 1.5rem;
+    padding-left: 1.5em;
+    margin-bottom: 0.125rem;
+  }
+
+  #id_singleLevels + label {
+    transform: scale(.85) translateY(-0.5rem) translateX(0.15rem);
+  }
+</style>
+<div class="user-decorator"></div>
+<nav class="navbar navbar-light navbar-user">
+  <div class="container">
+    <a href="{% url 'users:usersList'%}" class="btn">
+      <div class="d-flex">
+        <span class="material-icons-round me-2">arrow_back</span> Lista de usuarios
+      </div>
+    </a>
+    <a class="navbar-brand" href="#">
+      <img src="https://www.poli.edu.co/sites/default/files/logos/logo_poli_nuevo_footer-ver5.png" alt="" height="64px">
+    </a>
+  </div>
+</nav>
+<main class="form-user mx-auto">
+  <form method="post" class="card card-user mx-auto">
+    {% csrf_token %}
+    <div class="card-body">
+      {% for field in form %}
+      <div class="mb-3">
+        <div class="form-floating">
+          {{ field.errors }}
+          {{ field }}
+          {{ field.label_tag }}
+        </div>
+      </div>
+      {% endfor %}
+      {% for field in form2 %}
+      <div class="mb-3">
+        <div class="form-floating">
+          {{ field.errors }}
+          {{ field }}
+          {{ field.label_tag }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="card-footer">
+      <div class="text-center">
+        <button class="btn btn-lg btn-primary" type="submit">Crear usuario</button>
+      </div>
+    </div>
+  </form>
+</main>
+{% endblock%}
+
+{% block customJs %}
+<script>
+  $('#id_group').addClass('form-select');
+  $('#id_password1, #id_password2').addClass('form-control');
+</script>
+{% endblock %}

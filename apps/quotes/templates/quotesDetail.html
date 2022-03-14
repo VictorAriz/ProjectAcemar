@@ -1,0 +1,117 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}
+Detalles de Cotizaciones del sistema
+{%endblock%}
+
+{% block bodyClass %}detail{% endblock %}
+
+{% block contendbody %}
+<!-- TODO: move this styles to "base" -->
+<style>
+  .wrapper-content {
+    padding-left: 4rem;
+    padding-right: 0;
+  }
+
+  .content {
+    background: #fff;
+    padding: 2rem;
+    /* margin: 25px; */
+    border-radius: 0 0 0 4rem;
+    min-height: calc(100vh - 4rem);
+    box-shadow: 0 16px 38px -12px rgb(0 0 0 / 56%), 0 4px 25px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%);
+  }
+
+  .report-cover img {
+    border: 5px solid #08345b;
+    border-radius: 1.5rem;
+    object-fit: cover;
+  }
+
+  .btn-circle {
+    width: 64px;
+    height: 64px;
+    /* padding: 10px 16px; */
+    border-radius: 64px;
+    font-size: 24px;
+    line-height: 74px;
+  }
+
+  .btn-circle>.material-icons-round {
+    font-size: 36px;
+  }
+
+  .btn-support {
+    position: fixed;
+    z-index: 9999;
+    right: 10px;
+    bottom: 10px;
+    line-height: 70px;
+    box-shadow: 0 16px 38px -12px rgb(0 0 0 / 56%), 0 4px 25px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%);
+    background: #f1f1f1;
+  }
+</style>
+<nav class="navbar navbar-light navbar-users bg-light mb-5">
+  <div class="container">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'quotes:quotesHome'%}">Inicio</a>
+      </li>
+      {% if user.is_staff %}
+      <li class="nav-item"><a href="{% url 'quotes:quotesList'%}" class="nav-link">Cotizaciónes</a></li>
+      <li class="nav-item"><a href="{% url 'users:users_list'%}" class="nav-link" aria-current="page">Usuarios</a></li>
+      {% endif %}
+    </ul>
+
+    <a class="navbar-brand" href="#">
+      <img src="https://graduados.poligran.edu.co/static/img/logo-poli-vertical.png" alt="" width="156">
+    </a>
+  </div>
+</nav>
+<main>
+  <div class="container pt-5">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-user mx-auto">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-auto">
+                <div class="report-cover">
+                  <img src="/media/{{object.imageReport}}" width="400" height="400">
+                </div>
+              </div>
+              <div class="col">
+                <div class="card border-0 py-5">
+                  <div class="card-body">
+                    <h2 class="mb-0" style="color: #08345b;">{{object.name}}</h2>
+                    <h5 style="color: #35aed7;">Fecha de Creacion: 12/05/2022</h5>
+                    <p>{{object.description}}</p>
+                  </div>
+                  <div class="card-footer">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <!-- <a href="/media/{{object.fileReport}}" class="btn btn-primary btn-lg">Solicitud de acceso</a> -->
+                        <a href="/media/{{object.fileReport}}" class="btn btn-primary btn-lg">Ver reporte</a>
+                      </div>
+                      <div class="col-auto">
+                        <button class="btn btn-lg">
+                          Video Explicativo
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</main>
+
+
+<a href="#" class="btn btn-light btn-circle btn-support">
+  <span class="material-icons-round">support</span>
+</a>
+{% endblock %}

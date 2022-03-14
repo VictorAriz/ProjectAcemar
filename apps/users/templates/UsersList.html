@@ -1,0 +1,91 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}
+Listado de usuarios del sistema
+{%endblock%}
+
+{% block contendbody %}
+<style>
+  thead {
+    background: #0f375a;
+  }
+
+  thead th {
+    color: #fff;
+  }
+</style>
+<nav class="navbar navbar-light navbar-users">
+  <div class="container">
+    {% if user.is_staff %}
+    <!-- <nav>
+        <a href="{% url 'users:user_list'%}">listado usuarios menu</a>
+      </nav> -->
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a href="{% url 'quotes:quotesList'%}" class="nav-link">Cotizaciones</a></li>
+      <li class="nav-item"><a href="{% url 'users:user_list'%}" class="nav-link active" aria-current="page">Usuarios</a></li>
+    </ul>
+    {% endif %}
+
+    <!-- {% if user.get_username %}
+    <h1>if logged</h1>
+    {% endif %} -->
+
+    <a class="navbar-brand" href="#">
+      <img src="https://graduados.poligran.edu.co/static/img/logo-poli-vertical.png" alt="" width="156">
+    </a>
+  </div>
+</nav>
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-user mx-auto">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>Nivel de acceso</th>
+                    <th>Nombre de usuario</th>
+                    <th>Identificacion</th>
+                    <th>Nombres</th>
+                    <!-- <th>Apellidos</th> -->
+                    <!-- <th>Correo electronico</th> -->
+                    <th class="text-center">Opciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% if object_list %}
+                  {% for app in object_list %}
+                  <tr>
+                    <th>{{app.profile.levels}}</th>
+                    <td>{{app.username}}</td>
+                    <td>{{app.documentation}}</td>
+                    <td>{{app.first_name}} {{app.last_name}}</td>
+                    <!-- <td>{{app.email}}</td> -->
+                    <td class="text-center"><a href="{% url 'users:usersEdit' app.id %}">Editar</a> /
+                      <a href="{% url 'users:usersDelete' app.id %}">Eliminar</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  {%else%}
+                  <tr>
+                    <td colspan="8">
+                      <h1>No existen los registros de usuarios</h1>
+                    </td>
+                  </tr>
+                  {%endif%}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="text-end">
+              <a class="btn btn-lg btn-primary" href="{% url 'users:usersCreate'%}">Crear usuario</a>
+            </div>
+          </div>
+        </div>
+      </div>
+</main>
+{% endblock %}

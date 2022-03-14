@@ -1,0 +1,134 @@
+{% extends 'layouts/base.html' %}
+{%block title%}
+Cotizaciones del Sistema
+{%endblock%}
+{% block bodyClass %}report{% endblock %}
+
+{% block contendbody %}
+<style>
+  .form-floating>textarea.form-control {
+    height: auto;
+  }
+
+  .form-floating--file {
+    padding: 1rem 0.75rem 0.625rem;
+    background: #08345b;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+  }
+
+  .form-floating--file input {
+    border: none;
+  }
+
+  .form-floating--file label {
+    opacity: .65;
+    transform: scale(.85) translateY(-0.5rem) translateX(-0.85rem);
+  }
+
+  #id_levels {
+    /* height: calc(3.5rem + 2px); */
+    line-height: 1.25;
+    display: block;
+    width: 100%;
+    padding: 2.25rem 0.75rem 0.625rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #fff;
+    /* color: #212529; */
+    background-color: #08345b;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+
+  #id_levels li {
+    display: block;
+    min-height: 1.5rem;
+    padding-left: 1.5em;
+    margin-bottom: 0.125rem;
+  }
+
+  #id_levels + label {
+    transform: scale(.85) translateY(-0.5rem) translateX(0.15rem);
+  }
+
+  #id_fileType {
+    background: #f9a801;
+  }
+</style>
+<nav class="navbar navbar-light navbar-report">
+  <div class="container">
+    <a href="{% url 'quotes:quotesList'%}" class="btn">
+      <div class="d-flex">
+        <span class="material-icons-round me-2">arrow_back</span> Lista de Cotizaciones
+      </div>
+    </a>
+    <a class="navbar-brand" href="#">
+      <img src="https://graduados.poligran.edu.co/static/img/logo-poli-vertical.png" alt="" height="64px">
+    </a>
+  </div>
+</nav>
+<main class="form-report mx-auto">
+  <form method="post" enctype="multipart/form-data" class="card card-report mx-auto">
+    {% csrf_token %}
+    <div class="card-body row2 mx-0">
+      <!-- <div class="col-6"> -->
+        {% for field in form %}
+          <div class="form-wrapper mb-3">
+            <div class="form-floating">
+              {{ field.errors }}
+              {{ field }}
+              {{ field.label_tag }}
+            </div>
+          </div>
+        {% endfor %}
+      <!-- </div> -->
+    </div>
+
+    <div class="card-footer">
+      <div class="text-center">
+        <button class="btn btn-lg btn-primary" type="submit">Crear Cotización</button>
+      </div>
+    </div>
+  </form>
+</main>
+<!-- <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button name="guardar" class="button special" type="submit" >Guardar</button>
+    <a href="{% url 'report:reportList' %}"><button name="regresar" class="button" type="button" >regresar</button></a>
+</form> -->
+{% endblock%}
+
+{% block customJs %}
+<script>
+  $('#id_imageReport, #id_fileReport').parent('.form-floating').addClass('form-floating--file');
+  $('.js-typeInput').parents('.form-wrapper').hide();
+  $('#id_fileType').change(function() {
+    $('.js-typeInput').parents('.form-wrapper').hide();
+    console.log('>>>', $(this).val())
+
+    if ($(this).val() == '4'){
+      $('#id_sqlData').parents('.form-wrapper').show();
+    }
+
+    if ($(this).val() == '5'){
+      $('#id_biData').parents('.form-wrapper').show();
+    }
+
+    if ($(this).val() == '1' || $(this).val() == '2' || $(this).val() == '3') {
+      $('#id_fileReport').parents('.form-wrapper').show();
+    }
+  });
+  // $('#id_biData')
+  // $('#id_sqlData')
+  // $('#id_password1, #id_password2').addClass('form-control');
+</script>
+{% endblock%}

@@ -1,0 +1,296 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}
+Listado de cotizaciones del sistema
+{%endblock%}
+
+{% block contendbody %}
+<style>
+  body {
+    background: #08345b;
+  }
+
+  .wrapper-content {
+    padding-left: 4rem;
+    padding-right: 0;
+  }
+
+  .content {
+    background: #fff;
+    padding: 2rem;
+    /* margin: 25px; */
+    border-radius: 0 0 0 4rem;
+    min-height: calc(100vh - 4rem);
+    box-shadow: 0 16px 38px -12px rgb(0 0 0 / 56%), 0 4px 25px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%);
+  }
+
+  /*
+ * Sidebar
+ */
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    /* rtl:raw:
+  right: 0;
+  */
+    bottom: 0;
+    /* rtl:remove */
+    left: 0;
+    z-index: 100;
+    /* Behind the navbar */
+    padding: 2rem 0 0;
+    /* Height of navbar */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  }
+
+  @media (max-width: 767.98px) {
+    .sidebar {
+      top: 5rem;
+    }
+  }
+
+  .sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* Scrollable contents if viewport is shorter than content. */
+  }
+
+  .sidebar .nav-link {
+    font-weight: 500;
+    color: #08345b;
+    background: #fff;
+    border-radius: 0.75rem;
+    padding: .75rem 1rem;
+  }
+
+  .sidebar .nav-link .feather {
+    margin-right: 4px;
+    color: #727272;
+  }
+
+  .sidebar .nav-link.active {
+    color: #2470dc;
+  }
+
+  .sidebar .nav-link:hover .feather,
+  .sidebar .nav-link.active .feather {
+    color: inherit;
+  }
+
+  .sidebar-heading {
+    font-size: .75rem;
+    text-transform: uppercase;
+  }
+
+  .home-card {
+    overflow: hidden;
+    border-radius: 0 3rem 3rem 3rem;
+  }
+
+  .col-12.col-md-4.p-4:nth-child(1) .home-card {
+    background: #f40b7b;
+  }
+
+  .col-12.col-md-4.p-4:nth-child(2) .home-card {
+    background: #8ac61c;
+  }
+
+  .home-card-image {
+    object-fit: cover;
+    border-radius: 0 50% 50%;
+    margin: -15% -15%;
+  }
+
+  .home-card-content {
+    margin-top: -15%;
+  }
+
+  .home-card-content h3 {
+    color: #fff;
+    font-weight: 800;
+  }
+
+  .btn-circle {
+    width: 64px;
+    height: 64px;
+    /* padding: 10px 16px; */
+    border-radius: 64px;
+    font-size: 24px;
+    line-height: 74px;
+  }
+
+  .btn-circle>.material-icons-round {
+    font-size: 36px;
+  }
+
+  .btn-support {
+    position: fixed;
+    z-index: 9999;
+    right: 10px;
+    bottom: 10px;
+    line-height: 70px;
+    box-shadow: 0 16px 38px -12px rgb(0 0 0 / 56%), 0 4px 25px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%);
+    background: #f1f1f1;
+  }
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 sidebar">
+      <div class="position-sticky ps-4">
+        <ul class="nav flex-column">
+          <li class="nav-item mb-4">
+            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+              <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+              <label class="btn btn-outline-warning" for="btncheck1">Inicio</label>
+
+              <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" checked>
+              <label class="btn btn-outline-warning" for="btncheck2">Cotizaciones</label>
+            </div>
+          </li>
+          <li class="nav-item mb-4">
+            <a class="nav-link active" aria-current="page" href="#">
+              <div class="d-flex">
+                <span class="material-icons-round me-3">
+                  auto_stories
+                </span>
+                Texto Aqui
+              </div>
+            </a>
+          </li>
+          <li class="nav-item mb-4">
+            <a class="nav-link" href="#">
+              <div class="d-flex">
+                <span class="material-icons-round me-3">
+                  sentiment_very_satisfied
+                </span>
+                Texto Aqui
+              </div>
+            </a>
+          </li>
+          <li class="nav-item mb-4">
+            <a class="nav-link" href="#">
+              <div class="d-flex">
+                <span class="material-icons-round me-3">
+                  laptop_chromebook
+                </span>
+                Texto Aqui
+              </div>
+            </a>
+          </li>
+          <li class="nav-item mb-4">
+            <a class="nav-link" href="#">
+              <div class="d-flex">
+                <span class="material-icons-round me-3">
+                  calculate
+                </span>
+                Texto Aqui
+              </div>
+            </a>
+          </li>
+          <li class="nav-item mb-4">
+            <a class="nav-link" href="#">
+              <div class="d-flex">
+                <span class="material-icons-round me-3">
+                  extension
+                </span>
+                Texto Aqui
+              </div>
+            </a>
+          </li>
+          <li class="nav-item mb-4">
+            <a class="nav-link" href="#">
+              <div class="d-flex">
+                <span class="material-icons-round me-3">
+                  psychology
+                </span>
+                Texto Aqui
+              </div>
+            </a>
+          </li>
+          <li class="nav-item mb-4">
+            <a class="nav-link" href="#">
+              <div class="d-flex">
+                <span class="material-icons-round me-3">
+                  keyboard
+                </span>
+                Texto Aqui
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="wrapper-content col-md-9 ms-sm-auto col-lg-10">
+      <div class="content">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+          <div class="input-group">
+            <input type="text" class="form-control" id="name" placeholder="Buscar reporte" name="search"
+              aria-label="Username" aria-describedby="basic-addon1" style="background: #dedede;">
+            <span class="input-group-text" id="basic-addon1" style="background: #dedede;">
+              <button type="submit" class="btn btn-primary" style="background:#08345b">Buscar</button>
+              <!-- <span class="material-icons-round">
+                search
+              </span> -->
+            </span>
+          </div>
+        </div>
+        <!-- <div class="col-4 mb-3">
+          <select id="id_categories" class="form-control" name="categories">
+            <option selected disabled>Filtrar por Categoria</option>
+            {% for choice in categories %}
+            <option value="{{ choice.id }}" data-time="{{ choice.time }}">{{ choice.name }}</option>
+            {% endfor %}
+          </select>
+        </div> -->
+
+        <div class="row">
+          {% if object_list %}
+          {% for app in object_list %}
+          <div class="col-12 col-md-4 p-4">
+            <a href="{% url 'quotes:quotesDetail' app.id %}" class="text-decoration-none">
+              <div class="card home-card p-2">
+                <div class="ratio ratio-1x1">
+                  <img src="/media/{{app.imageReport}}" class="home-card-image">
+                </div>
+                <div class="home-card-content card-body row align-items-center">
+                  <div class="col-auto">
+                    <button class="btn btn-light btn-circle">
+                      <span class="material-icons-round">Download</span>
+                    </button>
+                  </div>
+                  <div class="col text-end">
+                    <h5 class="card-title font-weight-bold text-white">{{app.name}}</h5>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+          {%endif%}
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <a href="#" class="btn btn-light btn-circle btn-support">
+    <span class="material-icons-round">Support</span>
+  </a>
+</div>
+{% endblock %}
+
+{% block customJs %}
+<!-- <script>
+  $('.home-card').each(function () {
+    var back = ["#f40b7b", "#8ac61c", "#f9a900", "#39b7c8"];
+    var rand = back[Math.floor(Math.random() * back.length)];
+    $(this).css('background', rand);
+  });
+</script> -->
+{% endblock %}

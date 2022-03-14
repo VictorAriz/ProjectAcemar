@@ -1,0 +1,112 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}
+Listado de cotizaciones del sistema
+{%endblock%}
+
+{% block contendbody %}
+<style>
+  thead {
+    background: #0f375a;
+  }
+
+  thead th {
+    color: #fff;
+  }
+</style>
+<nav class="navbar navbar-light navbar-users">
+  <div class="container">
+    {% if user.is_staff %}
+    <!-- <nav>
+        <a href="{% url 'users:user_list'%}">listado usuarios menu</a>
+      </nav> -->
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a href="{% url 'quotes:quotesList'%}" class="nav-link active">Cotizaciones</a></li>
+      <li class="nav-item"><a href="{% url 'users:user_list'%}" class="nav-link" aria-current="page">Usuarios</a></li>
+    </ul>
+    {% endif %}
+
+    <!-- {% if user.get_username %}
+    <h1>if logged</h1>
+    {% endif %} -->
+
+    <a class="navbar-brand" href="#">
+      <img src="https://graduados.poligran.edu.co/static/img/logo-poli-vertical.png" alt="" width="156">
+    </a>
+  </div>
+</nav>
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-user mx-auto">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <!-- <th>Embebido Power</th> -->
+                    <!-- <th>Codigo Sql</th> -->
+                    <th>Texto</th>
+                    <th>Tipo de reporte</th>
+                    <th>Nivel</th>
+                    <th>Archivo</th>
+                    <th class="text-center">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% if object_list %}
+                  {% for app in object_list %}
+                  <tr>
+                    <td>
+                      <img src="/media/{{app.imageReport}}" class="rounded" width="64" height="64">
+                    </td>
+                    <td>{{app.name}}</td>
+                    <td>{{app.description}}</td>
+                    <!-- <td>{{app.biData}}</td> -->
+                    <!-- <td>{{app.sqlData}}</td> -->
+                    <td>{{app.text}}</td>
+                    <td>{{app.fileType}}</td>
+                    <td>
+                      <ul>
+                        {% for l in app.levels.all %}
+                          <li>
+                            {{l}}
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </td>
+                    <td>
+                      <a href="/media/{{app.fileReport}}">Descargar</a>
+                    </td>
+
+                    <td class="text-center">
+                      <a href="{% url 'quotes:quotesEdit' app.id %}">Editar</a> /
+                      <a href="{% url 'quotes:quotesDelete' app.id %}">Eliminar</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  {%else%}
+                  <tr>
+                    <td colspan="8">
+                      <h1>No Existen Cotizaciones Creadas</h1>
+                    </td>
+                  </tr>
+                  {%endif%}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="text-end">
+              <a class="btn btn-lg btn-primary" href="{% url 'quotes:quotesCreate'%}">Crear Cotizaciones</a>
+            </div>
+          </div>
+        </div>
+      </div>
+</main>
+{% endblock %}
