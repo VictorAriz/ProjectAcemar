@@ -20,7 +20,8 @@ from django.urls import reverse
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -33,6 +34,21 @@ SECRET_KEY = 'django-insecure-@&7ciyfn)ty(ww-s-wupx1x3+aph+#z682=-dy22$1(1iwcscu
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.IsAuthenticated'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ],
+   # 'DEFAULT_PERMISSION_CLASSES': {'rest_framework.permissions.IsAuthenticated',},
+   # 'DEFAULT_AUTHENTICATION_CLASSES': {'rest_framework.authentication.TokenAuthentication',},
+}
+
 
 
 # Application definition
@@ -57,6 +73,9 @@ INSTALLED_APPS = [
     'rest_auth.registration',
 ]
 
+#site created by default
+SITE_ID = 1
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -65,19 +84,27 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
+X_FRAME_OPTIONS = 'ALLOW'
+
 ROOT_URLCONF = 'acemarProject.urls'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -137,7 +164,7 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
-LOGIN_REDIRECT_URL=reverse('report:reportHome')
+LOGIN_REDIRECT_URL=reverse('quotes:quotesHome')
 LOGOUT_REDIRECT_URL=reverse('login')
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -146,3 +173,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
